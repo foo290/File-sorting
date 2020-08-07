@@ -10,7 +10,7 @@ python main.py
 Or run thru any IDE.
 
 ## Description
-File swap is a computer software eith a nice GUI that keeps your random files' mess in shape by sorting files on the bases of their extensions in diffrent folders created according to the file types found.
+File swap is a computer software with a nice GUI that keeps your random files' mess in shape by sorting files on the bases of their extensions in diffrent folders created according to the file types found.
 ##### For example 
 if your directory contains Images, PDFs, excel files etc. It will create folder for images and sort all the images into that folder and so on.
 
