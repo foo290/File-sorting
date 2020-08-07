@@ -1,4 +1,7 @@
 import os
+
+"""     This module has all the paths that the software uses prefixed with cwd.     """
+
 #-----------------------------------------------------  PATH FINDER SCRIPT  ---------------------------------------------
 
 installed_path=os.getcwd()

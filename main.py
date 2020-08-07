@@ -1,61 +1,77 @@
 from backendComponents import (extDatabase, AdvanceOperation, reset_counter, UserConfig,
-                               autoSense_confirmation, aSError, redundent_files, ask, show_online,
+                               autoSense_confirmation, aSError, redundent_files, ask,
                                add_New_EXTENSION, delete_file_type, del_eXtensions)
-from oops3 import *
+from oops3 import * # this module contains all the gui components in a class
 from directoryManager import *
 from ctypes import windll
 
-e=windll.shcore.SetProcessDpiAwareness(2)
+e=windll.shcore.SetProcessDpiAwareness(2) # For Setting DPI according to screen resolution
 
+""" Variables and lists """
 update_list_FE=[]
 themecolor = '#303030'
 closing_counter = 0
 move_redundent=[]
 _ASPATH=[]
 
-
-def enabel_AutoSense():
-    arguList=[]
-    autoSense_panel = Toplevel()
-    width = 590
-    height = 225
-    x = (autoSense_panel.winfo_screenwidth() // 2) - (width // 2)
-    y = (autoSense_panel.winfo_screenheight() // 2) - (height // 2)
-    autoSense_panel.geometry(f'{width}x{height}+{x}+{y}')
-    autoSense_panel.focus()
-    askglobal_obj = Mainframe2()
-    autoSense_panel.title('AutoSense Feature')
-    autoSense_panel.focus()
-    autoSense_panel.resizable(0,0)
-    askcan = askglobal_obj.customcan(autoSense_panel, width, height, 'white', 0, 0)
-    pic=PhotoImage(file=autoSense_Enable_graphic)
-    askcan.create_image(20,20,image=pic,anchor=NW)
-    askcan.create_text(200, 20, text='AutoSense', anchor=NW, font='Ebrima 20')
-    askcan.create_line(200,66,450,66,fill='#cdcdcd')
-    askcan.create_text(200, 80, text='AutoSense enables Automatic background sorting whenever\na new file arrives in selected directory.', anchor=NW)
-    askcan.create_text(200, 120, text='Just select the directory on which you want to apply AutoSense\nand Software will take care of rest.', anchor=NW)
-    def cancelling():
-        arguList.insert(0,0)
-        autoSense_panel.quit()
-        autoSense_panel.destroy()
-    b1=askglobal_obj.custombuttons(askcan,'Cancel',15,1,cancelling,450,180)
-    b1.config(borderwidth=2,relief='groove',cursor="hand2")
-    def turningONN():
-        arguList.insert(0,1)
-        autoSense_panel.quit()
-        autoSense_panel.destroy()
-    b2=askglobal_obj.custombuttons(askcan,'Enable',15,1,turningONN,330,180)
-    autoSense_panel.protocol('WM_DELETE_WINDOW',cancelling)
-    b2.config(borderwidth=2,relief='groove',cursor="hand2")
-    autoSense_panel.mainloop()
-    return arguList[0]
-
 bodycolor = '#1e1e1e'
 fonttxt = 'Ebrima'
 terminator = 0
 file_types = extDatabase('','ft')
 
+
+autosense_win_manager = 0 # Ensures that only one toplevel window appear at once.
+
+def enabel_AutoSense():
+
+    """ This function shows the option panel for yes and cancel to activate the auto sense service """
+
+    global autosense_win_manager
+    if not autosense_win_manager:
+        autosense_win_manager = 1
+        arguList=[]
+        autoSense_panel = Toplevel()
+        width = 700
+        height = 225
+        x = (autoSense_panel.winfo_screenwidth() // 2) - (width // 2)
+        y = (autoSense_panel.winfo_screenheight() // 2) - (height // 2)
+        autoSense_panel.geometry(f'{width}x{height}+{x}+{y}')
+        autoSense_panel.focus()
+        askglobal_obj = Mainframe2()
+        autoSense_panel.title('AutoSense Feature')
+        autoSense_panel.focus()
+        autoSense_panel.resizable(0,0)
+        askcan = askglobal_obj.customcan(autoSense_panel, width, height, 'white', 0, 0)
+        pic=PhotoImage(file=autoSense_Enable_graphic)
+        askcan.create_image(20,20,image=pic,anchor=NW)
+        askcan.create_text(200, 20, text='AutoSense', anchor=NW, font='Ebrima 20')
+        askcan.create_line(200,66,450,66,fill='#cdcdcd')
+        askcan.create_text(200, 80, text='AutoSense enables Automatic background sorting whenever\na new file arrives in selected directory.', anchor=NW)
+        askcan.create_text(200, 120, text='Just select the directory on which you want to apply AutoSense\nand Software will take care of rest.', anchor=NW)
+        def cancelling():
+            global autosense_win_manager
+            autosense_win_manager = 0
+            arguList.insert(0,0)
+            autoSense_panel.quit()
+            autoSense_panel.destroy()
+
+        b1=askglobal_obj.custombuttons(askcan,'Cancel',15,1,cancelling,450,180)
+        b1.config(borderwidth=2,relief='groove',cursor="hand2")
+        def turningONN():
+            arguList.insert(0,1)
+            autoSense_panel.quit()
+            autoSense_panel.destroy()
+        b2=askglobal_obj.custombuttons(askcan,'Enable',15,1,turningONN,300,180)
+        autoSense_panel.protocol('WM_DELETE_WINDOW',cancelling)
+        b2.config(borderwidth=2,relief='groove',cursor="hand2")
+        autoSense_panel.mainloop()
+        return arguList[0]
+
+
 def proceed():
+
+    """   The main Function for root window   """
+
     global terminator
     root=Tk()
     width = 900
@@ -72,7 +88,7 @@ def proceed():
     root.geometry(f'{width}x{height}+{x}+{y}')
     root.resizable(False,False)
     place=' '*100
-    root.title(f'{place} Fetch-X')
+    root.title(f'{place} fileSWAP')
     root.iconbitmap(logo_path)
 
     root.iconbitmap(root,logo_path)
@@ -87,6 +103,10 @@ def proceed():
     # -----------------------------------------------------  EXTENSIONS MANAGER FUNC.    ---------------------------------------------
 
     def eXTENSIONS_MANAGER():
+
+        """   This function is the extension manager GUI panel thru which you can add, delete or see what types of extensions
+           are available.    """
+
         sglobal_obj = Mainframe2()
         sobj1 = Mainframe2()
         sobj2 = Mainframe2()
@@ -225,6 +245,7 @@ def proceed():
     #=============================================================  MAIN MENU   ==================================================================
     user_obj=UserConfig()
     def changecolor(t,c=404):
+        """    This function changes the highlighted lines around the window. You can chech this in Backlit option in menu of gui.     """
         if c==404:
             rootCanvas.config(highlightthickness=t)
             footerCanvas.config(highlightthickness=1, highlightbackground='steelblue')
@@ -248,6 +269,7 @@ def proceed():
     print(as_status,as_path)
 
     def activatingAS(caller):
+        """Ensuring AS is activated """
         global terminator
 
         if terminator==0:
@@ -258,7 +280,7 @@ def proceed():
                 if status==1:
                     messagebox.showinfo('Activated','AutoSense Service is Successfully activated on selected directory.\n\n'
                                                     'Minimise the software , we will not consume much Power.',parent=root)
-                    s=asstat[0]
+                    s=asstatadv[0]
                     s.config(text='AutoSense is Running....')
                     advas=asstatadv[0]
                     advPath=asstatadv[1]
@@ -275,7 +297,7 @@ def proceed():
             if confrm==True:
                 terminator=0
                 messagebox.showinfo('Activated', 'AUtoSense Service is Successfully Deactivated ! .', parent=root)
-                kl=asstat[0]
+                kl=asstatadv[0]
                 kl.config(text='')
                 advas = asstatadv[0]
                 adv__=asstatadv[1]
@@ -285,8 +307,7 @@ def proceed():
             else:
                 pass
         elif terminator==3 and caller=='Initial Call':
-            print('imaaaaa')
-            s = asstat[0]
+            s = asstatadv[0]
             s.config(text='AutoSense is Running....')
             advas = asstatadv[0]
             advas.config(text='AutoSense is Running....')
@@ -335,6 +356,8 @@ def proceed():
 
 
         def checkNewFileindir(path):
+
+                """ This function keep monitoring the assigned folder for arrival of new files """
                 global  terminator
 
                 mainpath = path
@@ -350,11 +373,14 @@ def proceed():
                 else:
                     pass
                 def looping():
-                    if terminator!=0:
-                        checkNewFileindir(path)
-                    else:
-                        if len(processed_files)>0:
-                            ask([f for f in processed_files if f not in redundent_files])
+                    try:
+                        if terminator!=0:
+                            checkNewFileindir(path)
+                        else:
+                            if len(processed_files)>0:
+                                ask([f for f in processed_files if f not in redundent_files])
+                    except StopIteration:
+                        messagebox.showerror('Unexpected Error','Something happend to the folder which was currently being monitored by autosense.')
 
                 root.after(1000, looping)
 
@@ -443,6 +469,8 @@ def proceed():
     #0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 
     def advancetab():
+
+            """This is the main tab you see when you run the software """
 
             global update_list_FE,terminator
 

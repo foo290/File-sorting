@@ -42,6 +42,9 @@ def add_New_EXTENSION(name,ext,win,caller=''):
         connection.close()
 
 def delete_file_type(ftyp,win):
+
+    """This function will delete the file type and all its relevant extensions"""
+
     connection=sqlite3.connect(extensions_DATABASE)
     try:
         allext=extDatabase('all_ext','e')
@@ -57,6 +60,9 @@ def delete_file_type(ftyp,win):
         connection.close()
 
 def del_eXtensions(name,ext_discard,win):
+
+    '''This function will only delete the extension '''
+
     extstodel=extDatabase(name,'e')
 
     allexts=extDatabase('all_ext','e')
@@ -78,6 +84,7 @@ def del_eXtensions(name,ext_discard,win):
         return -1
 
 def config_settings(id_no):
+    """This is for user configuration settings"""
     conncection_to_settings = sqlite3.connect(user_configuration_DATABASE)
     try:
         cur=conncection_to_settings.cursor()
@@ -123,6 +130,9 @@ def reset_counter():
     skip_operation_counter=0
 
 def ask(nonsorted):
+
+    """ This function show you the extension which was not sorted by the software """
+
     askwin = Toplevel()
     width = 850
     height = 500
@@ -202,6 +212,9 @@ def extDatabase(extType,ft):
 
 
 class AdvanceOperation:
+
+    """ This class handles the main operation of the software which is file sorting and making new folders. """
+
     _counter = 0
     _directory_counter = 0
     _created_folders = []
@@ -323,6 +336,9 @@ def renaming_file(src,dst):
         return -1
 
 def file_crash_handler(src,dst):
+
+    '''This gui shows if the software encounters two files with same name. You can also rename the file in middle of the process.'''
+
     global remove_operation_counter,skip_operation_counter
 
     _fileName=src.split('/')[-1]
@@ -491,6 +507,9 @@ def file_crash_handler(src,dst):
     askwin.mainloop()
 
 def autoSense_confirmation(root):
+
+    """This function is called when you try closing the software and autosense is running."""
+
     autoS = Toplevel()
     width = 750
     height = 300
@@ -538,6 +557,10 @@ def autoSense_confirmation(root):
     autoS.mainloop()
 
 def aSError():
+
+    """This function is called if the folder on which the autosense was assigned is no longer exist"""
+
+
     autoS = Toplevel()
     width = 612
     height = 344
@@ -567,15 +590,4 @@ def aSError():
     autoS.after(10000,quitDestroy)
     autoS.protocol('WM_DELETE_WINDOW', quitDestroy)
     autoS.mainloop()
-def show_online(type):
-    if type=='project':
-        webbrowser.open_new_tab('https://showcaseport.blogspot.com/2019/10/aspire-series.html')
-    elif type=='contact':
-        webbrowser.open_new_tab('https://www.linkedin.com/in/iam-nitinsharma')
-
-
-
-
-from ctypes import windll
-q=windll.shcore.SetProcessDpiAwareness(2)
 
