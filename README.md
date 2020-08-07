@@ -23,9 +23,20 @@ Even if you close the software with autosense on, database will remember the fol
 Coming to the exception handling, the software will keep you informed for any fault by keeping your files safe.
 
 ## Snapshots
+#### Frontend
+<img src='ReadmeImages/snapshot (1).png' width=500>
 
-![alt text](https://github.com/[foo290]/[File-sorting]/blob/[master]/image.jpg?raw=true)
+#### Extension Manager
 
+<img src='ReadmeImages/snapshot (2).png' width=500>
+
+#### Same name exception handling
+
+<img src='ReadmeImages/snapshot (3).png' width=500>
+
+#### Unknown files
+
+<img src='ReadmeImages/snapshot (4).png' width=500>
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
