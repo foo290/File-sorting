@@ -1,6 +1,6 @@
-from fetchX_backendComponents import (extDatabase,AdvanceOperation,reset_counter,UserConfig,
-                                      autoSense_confirmation,aSError,redundent_files,ask,show_online,
-                                      add_New_EXTENSION,delete_file_type,del_eXtensions)
+from backendComponents import (extDatabase, AdvanceOperation, reset_counter, UserConfig,
+                               autoSense_confirmation, aSError, redundent_files, ask, show_online,
+                               add_New_EXTENSION, delete_file_type, del_eXtensions)
 from oops3 import *
 from directoryManager import *
 from ctypes import windll
